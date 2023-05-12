@@ -13,6 +13,7 @@ import {
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './users.service';
+import { SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
 
 @Controller('auth')
 export class UsersController {
@@ -23,9 +24,10 @@ export class UsersController {
     this.userService.create(body.email, body.password);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
+  @UseInterceptors(SerializeInterceptor)
   @Get('/:id')
   findUser(@Param('id') id: string) {
+    console.log('handler is running!');
     return this.userService.findOne(parseInt(id));
   }
 
